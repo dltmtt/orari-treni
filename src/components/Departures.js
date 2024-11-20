@@ -74,7 +74,7 @@ function Departures({ stationId, stationName }) {
 	};
 
 	const formatTrack = (departure) => {
-		const station = departure.stops.find(
+		const station = departure.stops?.find(
 			(s) => s.station_id === selectedStationId,
 		);
 
@@ -121,7 +121,7 @@ function Departures({ stationId, stationName }) {
 	};
 
 	const formatDepartureTime = (departure) => {
-		const station = departure.stops.find(
+		const station = departure.stops?.find(
 			(s) => s.station_id === selectedStationId,
 		);
 		return station ? formatTime(station.scheduled_departure_time) : "N/A";

@@ -74,7 +74,7 @@ function Arrivals({ stationId, stationName }) {
 	};
 
 	const formatTrack = (arrival) => {
-		const station = arrival.stops.find(
+		const station = arrival.stops?.find(
 			(s) => s.station_id === selectedStationId,
 		);
 
@@ -119,7 +119,7 @@ function Arrivals({ stationId, stationName }) {
 	};
 
 	const formatArrivalTime = (arrival) => {
-		const station = arrival.stops.find(
+		const station = arrival.stops?.find(
 			(s) => s.station_id === selectedStationId,
 		);
 		return station ? formatTime(station.scheduled_arrival_time) : "N/A";
