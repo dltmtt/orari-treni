@@ -26,7 +26,14 @@ function TrainInfo({
 	}, [trainNumber, originStationId, departureDate]);
 
 	if (!trainInfo) {
-		return <div>Loading...</div>;
+		return (
+			<div className="p-4 bg-gray-100 border rounded">
+				<button type="button" onClick={onClose} className="mb-4 text-red-500">
+					Close
+				</button>
+				<div>No data available</div>
+			</div>
+		);
 	}
 
 	return (
