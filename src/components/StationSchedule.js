@@ -219,15 +219,28 @@ function TrainSchedule({
 								<td className="py-2 px-4 border">
 									<span
 										className="text-blue-500 cursor-pointer"
-										onClick={() =>
-											handleStationClick(train.origin_station_id, train.origin)
-										}
+										onClick={() => {
+											const stationId =
+												apiEndpoint === "departures"
+													? train.destination_station_id
+													: train.origin_station_id;
+											const stationName =
+												apiEndpoint === "departures"
+													? train.destination
+													: train.origin;
+											handleStationClick(stationId, stationName);
+										}}
 										onKeyUp={(e) => {
 											if (e.key === "Enter" || e.key === " ") {
-												handleStationClick(
-													train.origin_station_id,
-													train.origin,
-												);
+												const stationId =
+													apiEndpoint === "departures"
+														? train.destination_station_id
+														: train.origin_station_id;
+												const stationName =
+													apiEndpoint === "departures"
+														? train.destination
+														: train.origin;
+												handleStationClick(stationId, stationName);
 											}
 										}}
 									>
