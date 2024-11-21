@@ -1,5 +1,4 @@
 import React from "react";
-import { formatDelay } from "../utils/utils";
 import Departures from "./Departures";
 import StationSchedule from "./StationSchedule";
 
