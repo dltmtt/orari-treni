@@ -85,14 +85,16 @@ function TrainInfo({
 								{index !== 0 && (
 									<>
 										<td className="py-2 px-4 border">
-											{formatIsoTime(stop.scheduled_departure_time)}
+											{stop.type === "cancelled"
+												? "Cancelled"
+												: formatIsoTime(stop.scheduled_departure_time)}
 										</td>
 										<td className="py-2 px-4 border">
-											{stop.actual_departure_time
-												? getFormattedTime(stop, {
-														checkDepartures: true,
-													})
-												: "N/A"}
+											{stop.type === "cancelled"
+												? "Cancelled"
+												: stop.actual_departure_time
+													? getFormattedTime(stop, { checkDepartures: true })
+													: "N/A"}
 										</td>
 									</>
 								)}
@@ -104,14 +106,16 @@ function TrainInfo({
 								{index !== trainInfo.stops.length - 1 && (
 									<>
 										<td className="py-2 px-4 border">
-											{formatIsoTime(stop.scheduled_arrival_time)}
+											{stop.type === "cancelled"
+												? "Cancelled"
+												: formatIsoTime(stop.scheduled_arrival_time)}
 										</td>
 										<td className="py-2 px-4 border">
-											{stop.actual_arrival_time
-												? getFormattedTime(stop, {
-														checkDepartures: false,
-													})
-												: "N/A"}
+											{stop.type === "cancelled"
+												? "Cancelled"
+												: stop.actual_arrival_time
+													? getFormattedTime(stop, { checkDepartures: false })
+													: "N/A"}
 										</td>
 									</>
 								)}
@@ -121,10 +125,14 @@ function TrainInfo({
 									</td>
 								)}
 								<td className="py-2 px-4 border">
-									{stop.scheduled_departure_track || "N/A"}
+									{stop.type === "cancelled"
+										? "Cancelled"
+										: stop.scheduled_departure_track || "N/A"}
 								</td>
 								<td className="py-2 px-4 border">
-									{stop.actual_departure_track || "N/A"}
+									{stop.type === "cancelled"
+										? "Cancelled"
+										: stop.actual_departure_track || "N/A"}
 								</td>
 							</tr>
 						))}
