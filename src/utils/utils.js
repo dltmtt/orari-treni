@@ -40,7 +40,11 @@ export const getFormattedTime = (stop, { checkDepartures }) => {
 };
 
 export const formatDelay = (stop) => {
-	const origin = stop.stops[0];
+	if (!stop.stops) {
+		return "Non sono disponibili informazioni in tempo reale";
+	}
+
+	const origin = stop.stops.find((stop) => stop.type === "departure");
 
 	if (origin.departed) {
 		if (stop.delay > 0) {

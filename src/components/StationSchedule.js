@@ -85,13 +85,13 @@ function TrainSchedule({
 	};
 
 	const formatTrack = (train) => {
-		const station = train.stops?.find(
+		if (!train.stops) {
+			return "Non sono disponibili aggiornamenti in tempo reale";
+		}
+
+		const station = train.stops.find(
 			(s) => s.station_id === selectedStationId,
 		);
-
-		if (!station) {
-			return "Error finding station ID";
-		}
 
 		const track =
 			station.actual_departure_track || station.actual_arrival_track;
@@ -112,8 +112,8 @@ function TrainSchedule({
 			formattedTrack = scheduledTrack;
 		}
 
-		const origin = train.stops[0];
-		const arrival = train.stops[train.stops.length - 1];
+		const origin = train.stops.find((stop) => stop.type === "departure");
+		const arrival = train.stops.find((stop) => stop.type === "arrival");
 
 		if (
 			(station.arrived || origin.actual_departure_time) &&
