@@ -15,8 +15,6 @@ export const getFormattedTime = (stop, { checkDepartures }) => {
 		? new Date(stop.scheduled_departure_time)
 		: new Date(stop.scheduled_arrival_time);
 
-	console.log("stop", stop);
-
 	let formattedTime;
 
 	if (actualTime) {
