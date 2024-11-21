@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axios";
-import { formatDelay, formatTime, getFormattedTime } from "../utils/utils";
+import { formatDelay, formatIsoTime, getFormattedTime } from "../utils/utils";
 
 function TrainInfo({
 	trainNumber,
@@ -43,10 +43,10 @@ function TrainInfo({
 			</button>
 			<h3 className="text-xl font-bold mb-2">Train {trainNumber}</h3>
 			<p>
-				{trainInfo.origin} · {formatTime(trainInfo.departure_time)}
+				{trainInfo.origin} · {formatIsoTime(trainInfo.departure_time)}
 			</p>
 			<p>
-				{trainInfo.destination} · {formatTime(trainInfo.arrival_time)}
+				{trainInfo.destination} · {formatIsoTime(trainInfo.arrival_time)}
 			</p>
 			<p>Ritardo: {formatDelay(trainInfo)}</p>
 			<div className="overflow-y-auto max-h-64 mt-4">
@@ -85,7 +85,7 @@ function TrainInfo({
 								{index !== 0 && (
 									<>
 										<td className="py-2 px-4 border">
-											{formatTime(stop.scheduled_departure_time)}
+											{formatIsoTime(stop.scheduled_departure_time)}
 										</td>
 										<td className="py-2 px-4 border">
 											{stop.actual_departure_time
@@ -104,7 +104,7 @@ function TrainInfo({
 								{index !== trainInfo.stops.length - 1 && (
 									<>
 										<td className="py-2 px-4 border">
-											{formatTime(stop.scheduled_arrival_time)}
+											{formatIsoTime(stop.scheduled_arrival_time)}
 										</td>
 										<td className="py-2 px-4 border">
 											{stop.actual_arrival_time

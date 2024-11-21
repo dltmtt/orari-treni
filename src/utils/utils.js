@@ -1,5 +1,5 @@
-export const formatTime = (dateString) => {
-	const date = new Date(dateString);
+export const formatIsoTime = (iso8601string) => {
+	const date = new Date(iso8601string);
 	return date.toLocaleTimeString([], {
 		hour: "2-digit",
 		minute: "2-digit",
@@ -22,20 +22,20 @@ export const getFormattedTime = (stop, { checkDepartures }) => {
 	if (actualTime) {
 		if (actualTime > new Date(scheduledTime.getTime() + 30000)) {
 			formattedTime = (
-				<span className="text-red-500">{formatTime(actualTime)}</span>
+				<span className="text-red-500">{formatIsoTime(actualTime)}</span>
 			);
 		} else {
 			formattedTime = (
-				<span className="text-green-500">{formatTime(actualTime)}</span>
+				<span className="text-green-500">{formatIsoTime(actualTime)}</span>
 			);
 		}
 	} else if (stop.delay > 0) {
 		const delayedTime = new Date(scheduledTime.getTime() + stop.delay * 60000);
 		formattedTime = (
-			<span className="text-yellow-500">{formatTime(delayedTime)}</span>
+			<span className="text-yellow-500">{formatIsoTime(delayedTime)}</span>
 		);
 	} else {
-		formattedTime = formatTime(scheduledTime);
+		formattedTime = formatIsoTime(scheduledTime);
 	}
 
 	return formattedTime;
