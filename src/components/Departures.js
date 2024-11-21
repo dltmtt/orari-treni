@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axios";
+import axios from "../utils/axios";
 import { formatDelay, formatTime } from "../utils/utils";
 import Arrivals from "./Arrivals";
 import TrainInfo from "./TrainInfo";

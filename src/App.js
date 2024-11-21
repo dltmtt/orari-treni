@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "./axios";
 import Departures from "./components/Departures";
+import axios from "./utils/axios";
 
 function App() {
 	const [searchQuery, setStationQuery] = useState("");

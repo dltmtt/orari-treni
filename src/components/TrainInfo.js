@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axios";
+import axios from "../utils/axios";
 import { formatDelay, formatTime, getFormattedTime } from "../utils/utils";
 
 function TrainInfo({

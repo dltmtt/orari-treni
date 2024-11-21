@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axios";
+import axios from "../utils/axios";
 import { formatDelay, formatTime } from "../utils/utils";
 import Departures from "./Departures";
 import TrainInfo from "./TrainInfo";
@@ -111,7 +111,9 @@ function Arrivals({ stationId, stationName }) {
 			formattedTrack = <span style={{ color: "gray" }}>{formattedTrack}</span>;
 		} else if (station.arrived && !station.departed) {
 			formattedTrack = (
-				<span style={{ animation: "blink 1s step-start infinite" }}>{formattedTrack}</span>
+				<span style={{ animation: "blink 1s step-start infinite" }}>
+					{formattedTrack}
+				</span>
 			);
 		}
 
@@ -160,88 +162,88 @@ function Arrivals({ stationId, stationName }) {
 			{loading ? (
 				<div>Loading...</div>
 			) : (
-					<table
-						className="min-w-full bg-white border rounded-lg shadow-md"
-						style={{ borderCollapse: "separate", borderSpacing: 0 }}
-					>
-						<thead>
-							<tr>
-								<th className="py-2 px-4 border rounded-tl-lg">Train</th>
-								<th className="py-2 px-4 border">Origin</th>
-								<th className="py-2 px-4 border">Arrival</th>
-								<th className="py-2 px-4 border">Delay</th>
-								<th className="py-2 px-4 border rounded-tr-lg">Track</th>
-							</tr>
-						</thead>
-						<tbody>
-							{arrivals.map((arrival, index) => (
-								<tr
-									key={`${arrival.number}-${arrival.origin_station_id}-${arrival.departure_date}`}
+				<table
+					className="min-w-full bg-white border rounded-lg shadow-md"
+					style={{ borderCollapse: "separate", borderSpacing: 0 }}
+				>
+					<thead>
+						<tr>
+							<th className="py-2 px-4 border rounded-tl-lg">Train</th>
+							<th className="py-2 px-4 border">Origin</th>
+							<th className="py-2 px-4 border">Arrival</th>
+							<th className="py-2 px-4 border">Delay</th>
+							<th className="py-2 px-4 border rounded-tr-lg">Track</th>
+						</tr>
+					</thead>
+					<tbody>
+						{arrivals.map((arrival, index) => (
+							<tr
+								key={`${arrival.number}-${arrival.origin_station_id}-${arrival.departure_date}`}
+							>
+								<td
+									className={`py-2 px-4 border ${
+										index === arrivals.length - 1 ? "rounded-bl-lg" : ""
+									}`}
 								>
-									<td
-										className={`py-2 px-4 border ${
-											index === arrivals.length - 1 ? "rounded-bl-lg" : ""
-										}`}
-									>
-										<span
-											className="text-blue-500 cursor-pointer"
-											onClick={() =>
+									<span
+										className="text-blue-500 cursor-pointer"
+										onClick={() =>
+											handleTrainClick(
+												arrival.number,
+												arrival.origin_station_id,
+												arrival.departure_date,
+											)
+										}
+										onKeyUp={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
 												handleTrainClick(
 													arrival.number,
 													arrival.origin_station_id,
 													arrival.departure_date,
-												)
+												);
 											}
-											onKeyUp={(e) => {
-												if (e.key === "Enter" || e.key === " ") {
-													handleTrainClick(
-														arrival.number,
-														arrival.origin_station_id,
-														arrival.departure_date,
-													);
-												}
-											}}
-										>
-											{formatNumber(arrival)}
-										</span>
-									</td>
-									<td className="py-2 px-4 border">
-										<span
-											className="text-blue-500 cursor-pointer"
-											onClick={() =>
+										}}
+									>
+										{formatNumber(arrival)}
+									</span>
+								</td>
+								<td className="py-2 px-4 border">
+									<span
+										className="text-blue-500 cursor-pointer"
+										onClick={() =>
+											handleStationClick(
+												arrival.origin_station_id,
+												arrival.origin,
+											)
+										}
+										onKeyUp={(e) => {
+											if (e.key === "Enter" || e.key === " ") {
 												handleStationClick(
 													arrival.origin_station_id,
 													arrival.origin,
-												)
+												);
 											}
-											onKeyUp={(e) => {
-												if (e.key === "Enter" || e.key === " ") {
-													handleStationClick(
-														arrival.origin_station_id,
-														arrival.origin,
-													);
-												}
-											}}
-										>
-											{arrival.origin}
-										</span>
-									</td>
-									<td className="py-2 px-4 border">
-										{formatArrivalTime(arrival)}
-									</td>
-									<td className="py-2 px-4 border">{formatDelay(arrival)}</td>
-									<td
-										className={`py-2 px-4 border ${
-											index === arrivals.length - 1 ? "rounded-br-lg" : ""
-										}`}
+										}}
 									>
-										{formatTrack(arrival)}
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				)}
+										{arrival.origin}
+									</span>
+								</td>
+								<td className="py-2 px-4 border">
+									{formatArrivalTime(arrival)}
+								</td>
+								<td className="py-2 px-4 border">{formatDelay(arrival)}</td>
+								<td
+									className={`py-2 px-4 border ${
+										index === arrivals.length - 1 ? "rounded-br-lg" : ""
+									}`}
+								>
+									{formatTrack(arrival)}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			)}
 		</div>
 	);
 }
