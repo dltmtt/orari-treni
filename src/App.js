@@ -54,14 +54,13 @@ function App() {
 	return (
 		<div className="container mx-auto p-4">
 			<div className="flex items-center mb-4 p-4">
-				<h1 className="text-3xl font-bold mr-4">Train Schedule</h1>
-				<div className="flex-grow flex relative">
+				<div className="flex-grow flex relative w-full">
 					<input
 						value={searchQuery}
 						onChange={handleInputChange}
 						onKeyDown={navigateSearchResults}
 						placeholder="Enter station name"
-						className="border p-2 rounded-l-lg flex-grow shadow-sm"
+						className="border p-2 rounded-l-lg flex-grow shadow-sm w-full"
 					/>
 					<button
 						type="button"
