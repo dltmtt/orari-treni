@@ -164,6 +164,12 @@ function TrainSchedule({
 			)}
 			{loading ? (
 				<div>Loading...</div>
+			) : stationSchedule.length === 0 ? (
+				<div className="px-2">
+					Non ci sono treni in{" "}
+					{apiEndpoint === "departures" ? "partenza da" : "arrivo in"} questa
+					stazione nei prossimi 90 minuti.
+				</div>
 			) : (
 				<div className="overflow-x-auto">
 					<table className="min-w-full bg-white border rounded-lg shadow-md">
