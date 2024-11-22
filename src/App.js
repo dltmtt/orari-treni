@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Departures from "./components/Departures";
+import TrainInfo from "./components/TrainInfo"; // Import TrainInfo component
 import axios from "./utils/axios";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
 	const [stationName, setStationName] = useState("");
 	const [searchResults, setSearchResults] = useState([]);
 	const [focusedIndex, setFocusedIndex] = useState(-1);
+	const [trainInfo, setTrainInfo] = useState(null); // State for train info
 
 	const searchStation = async (query) => {
 		if (query.trim() === "") {
@@ -19,12 +21,21 @@ function App() {
 		setFocusedIndex(-1);
 	};
 
+	const searchTrain = async (trainNumber) => {
+		const response = await axios.get(`/trains/${trainNumber}`);
+		setTrainInfo(response.data[0]); // TODO: Handle multiple trains
+		setSearchResults([]);
+		setStationQuery("");
+		setFocusedIndex(-1);
+	};
+
 	const handleSelectStation = (station) => {
 		setStationId(station.station_id);
 		setStationName(station.name);
 		setSearchResults([]);
 		setStationQuery("");
 		setFocusedIndex(-1);
+		setTrainInfo(null); // Clear train info when selecting a station
 	};
 
 	const handleInputChange = (e) => {
@@ -59,21 +70,26 @@ function App() {
 						value={searchQuery}
 						onChange={handleInputChange}
 						onKeyDown={navigateSearchResults}
-						placeholder="Enter station name"
+						placeholder="Inserisci stazione o numero treno"
 						className="border p-2 rounded-l-lg flex-grow shadow-sm w-full"
 					/>
 					<button
 						type="button"
 						onClick={() => {
-							searchStation(searchQuery);
-							if (searchResults.length > 0) {
-								handleSelectStation(searchResults[0]);
-								setStationQuery("");
+							if (searchQuery.trim() === "") return;
+							if (!Number.isNaN(Number(searchQuery))) {
+								searchTrain(searchQuery);
+							} else {
+								searchStation(searchQuery);
+								if (searchResults.length > 0) {
+									handleSelectStation(searchResults[0]);
+									setStationQuery("");
+								}
 							}
 						}}
 						className="bg-blue-500 text-white p-2 rounded-r-lg shadow-sm"
 					>
-						Search
+						Cerca
 					</button>
 					{searchResults.length > 0 && (
 						<ul className="absolute top-full left-0 right-0 bg-white border mt-1 max-h-60 overflow-y-auto z-10 rounded-lg shadow-lg">
@@ -97,8 +113,21 @@ function App() {
 					)}
 				</div>
 			</div>
-			{stationId && (
+			{stationId && !trainInfo && (
 				<Departures stationId={stationId} stationName={stationName} />
+			)}
+			{trainInfo && (
+				<TrainInfo
+					trainNumber={trainInfo.number}
+					originStationId={trainInfo.origin_station_id}
+					departureDate={trainInfo.departure_date}
+					onClose={() => setTrainInfo(null)}
+					onStationClick={(stationId, stationName) => {
+						setStationId(stationId);
+						setStationName(stationName);
+						setTrainInfo(null);
+					}}
+				/>
 			)}
 		</div>
 	);
