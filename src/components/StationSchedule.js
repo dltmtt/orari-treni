@@ -89,9 +89,7 @@ function TrainSchedule({
 			return "Non sono disponibili aggiornamenti in tempo reale";
 		}
 
-		const station = train.stops.find(
-			(s) => s.station_id === selectedStationId,
-		);
+		const station = train.stops.find((s) => s.station_id === selectedStationId);
 
 		const track =
 			station.actual_departure_track || station.actual_arrival_track;
@@ -173,7 +171,9 @@ function TrainSchedule({
 							<tr>
 								<th className="py-2 px-4 border rounded-tl-lg">Treno</th>
 								<th className="py-2 px-4 border">
-									{apiEndpoint === "departures" ? "Destinazione" : "Provenienza"}
+									{apiEndpoint === "departures"
+										? "Destinazione"
+										: "Provenienza"}
 								</th>
 								<th className="py-2 px-4 border">
 									{apiEndpoint === "departures" ? "Partenza" : "Arrivo"}
@@ -189,7 +189,9 @@ function TrainSchedule({
 								>
 									<td
 										className={`py-2 px-4 border ${
-											index === stationSchedule.length - 1 ? "rounded-bl-lg" : ""
+											index === stationSchedule.length - 1
+												? "rounded-bl-lg"
+												: ""
 										}`}
 									>
 										<span
@@ -251,7 +253,9 @@ function TrainSchedule({
 									<td className="py-2 px-4 border">{formatDelay(train)}</td>
 									<td
 										className={`py-2 px-4 border ${
-											index === stationSchedule.length - 1 ? "rounded-br-lg" : ""
+											index === stationSchedule.length - 1
+												? "rounded-br-lg"
+												: ""
 										}`}
 									>
 										{formatTrack(train)}
