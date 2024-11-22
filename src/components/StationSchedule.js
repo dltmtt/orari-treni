@@ -167,71 +167,57 @@ function TrainSchedule({
 			{loading ? (
 				<div>Loading...</div>
 			) : (
-				<table
-					className="min-w-full bg-white border rounded-lg shadow-md"
-					style={{ borderCollapse: "separate", borderSpacing: 0 }}
-				>
-					<thead>
-						<tr>
-							<th className="py-2 px-4 border rounded-tl-lg">Treno</th>
-							<th className="py-2 px-4 border">
-								{apiEndpoint === "departures" ? "Destinazione" : "Provenienza"}
-							</th>
-							<th className="py-2 px-4 border">
-								{apiEndpoint === "departures" ? "Partenza" : "Arrivo"}
-							</th>
-							<th className="py-2 px-4 border">Ritardo</th>
-							<th className="py-2 px-4 border rounded-tr-lg">Binario</th>
-						</tr>
-					</thead>
-					<tbody>
-						{stationSchedule.map((train, index) => (
-							<tr
-								key={`${train.number}-${train.origin_station_id}-${train.departure_date}`}
-							>
-								<td
-									className={`py-2 px-4 border ${
-										index === stationSchedule.length - 1 ? "rounded-bl-lg" : ""
-									}`}
+				<div className="overflow-x-auto">
+					<table className="min-w-full bg-white border rounded-lg shadow-md">
+						<thead>
+							<tr>
+								<th className="py-2 px-4 border rounded-tl-lg">Treno</th>
+								<th className="py-2 px-4 border">
+									{apiEndpoint === "departures" ? "Destinazione" : "Provenienza"}
+								</th>
+								<th className="py-2 px-4 border">
+									{apiEndpoint === "departures" ? "Partenza" : "Arrivo"}
+								</th>
+								<th className="py-2 px-4 border">Ritardo</th>
+								<th className="py-2 px-4 border rounded-tr-lg">Binario</th>
+							</tr>
+						</thead>
+						<tbody>
+							{stationSchedule.map((train, index) => (
+								<tr
+									key={`${train.number}-${train.origin_station_id}-${train.departure_date}`}
 								>
-									<span
-										className="text-blue-500 cursor-pointer"
-										onClick={() =>
-											handleTrainClick(
-												train.number,
-												train.origin_station_id,
-												train.departure_date,
-											)
-										}
-										onKeyUp={(e) => {
-											if (e.key === "Enter" || e.key === " ") {
+									<td
+										className={`py-2 px-4 border ${
+											index === stationSchedule.length - 1 ? "rounded-bl-lg" : ""
+										}`}
+									>
+										<span
+											className="text-blue-500 cursor-pointer"
+											onClick={() =>
 												handleTrainClick(
 													train.number,
 													train.origin_station_id,
 													train.departure_date,
-												);
+												)
 											}
-										}}
-									>
-										{formatNumber(train)}
-									</span>
-								</td>
-								<td className="py-2 px-4 border">
-									<span
-										className="text-blue-500 cursor-pointer"
-										onClick={() => {
-											const stationId =
-												apiEndpoint === "departures"
-													? train.destination_station_id
-													: train.origin_station_id;
-											const stationName =
-												apiEndpoint === "departures"
-													? train.destination
-													: train.origin;
-											handleStationClick(stationId, stationName);
-										}}
-										onKeyUp={(e) => {
-											if (e.key === "Enter" || e.key === " ") {
+											onKeyUp={(e) => {
+												if (e.key === "Enter" || e.key === " ") {
+													handleTrainClick(
+														train.number,
+														train.origin_station_id,
+														train.departure_date,
+													);
+												}
+											}}
+										>
+											{formatNumber(train)}
+										</span>
+									</td>
+									<td className="py-2 px-4 border">
+										<span
+											className="text-blue-500 cursor-pointer"
+											onClick={() => {
 												const stationId =
 													apiEndpoint === "departures"
 														? train.destination_station_id
@@ -241,27 +227,40 @@ function TrainSchedule({
 														? train.destination
 														: train.origin;
 												handleStationClick(stationId, stationName);
-											}
-										}}
+											}}
+											onKeyUp={(e) => {
+												if (e.key === "Enter" || e.key === " ") {
+													const stationId =
+														apiEndpoint === "departures"
+															? train.destination_station_id
+															: train.origin_station_id;
+													const stationName =
+														apiEndpoint === "departures"
+															? train.destination
+															: train.origin;
+													handleStationClick(stationId, stationName);
+												}
+											}}
+										>
+											{apiEndpoint === "departures"
+												? train.destination
+												: train.origin}
+										</span>
+									</td>
+									<td className="py-2 px-4 border">{formatTime(train)}</td>
+									<td className="py-2 px-4 border">{formatDelay(train)}</td>
+									<td
+										className={`py-2 px-4 border ${
+											index === stationSchedule.length - 1 ? "rounded-br-lg" : ""
+										}`}
 									>
-										{apiEndpoint === "departures"
-											? train.destination
-											: train.origin}
-									</span>
-								</td>
-								<td className="py-2 px-4 border">{formatTime(train)}</td>
-								<td className="py-2 px-4 border">{formatDelay(train)}</td>
-								<td
-									className={`py-2 px-4 border ${
-										index === stationSchedule.length - 1 ? "rounded-br-lg" : ""
-									}`}
-								>
-									{formatTrack(train)}
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+										{formatTrack(train)}
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			)}
 		</div>
 	);
