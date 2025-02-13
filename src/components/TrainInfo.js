@@ -27,7 +27,7 @@ function TrainInfo({
 
 	if (!trainInfo) {
 		return (
-			<div className="p-4 bg-gray-100 border rounded">
+			<div className="p-4 bg-gray-100 border rounded-sm">
 				<button type="button" onClick={onClose} className="mb-4 text-red-500">
 					Chiudi
 				</button>
@@ -72,7 +72,7 @@ function TrainInfo({
 	};
 
 	return (
-		<div className="p-4 bg-gray-100 border rounded">
+		<div className="p-4 bg-gray-100 border rounded-sm">
 			<button type="button" onClick={onClose} className="mb-4 text-red-500">
 				Close
 			</button>

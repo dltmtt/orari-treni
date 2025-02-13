@@ -65,13 +65,13 @@ function App() {
 	return (
 		<div className="container mx-auto p-4">
 			<div className="flex items-center mb-4 p-4">
-				<div className="flex-grow flex relative w-full">
+				<div className="grow flex relative w-full">
 					<input
 						value={searchQuery}
 						onChange={handleInputChange}
 						onKeyDown={navigateSearchResults}
 						placeholder="Inserisci stazione o numero treno"
-						className="border p-2 rounded-l-lg flex-grow shadow-sm w-full"
+						className="border p-2 rounded-l-lg grow shadow-xs w-full"
 					/>
 					<button
 						type="button"
@@ -87,7 +87,7 @@ function App() {
 								}
 							}
 						}}
-						className="bg-blue-500 text-white p-2 rounded-r-lg shadow-sm"
+						className="bg-blue-500 text-white p-2 rounded-r-lg shadow-xs"
 					>
 						Cerca
 					</button>
